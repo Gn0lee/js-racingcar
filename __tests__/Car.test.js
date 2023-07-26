@@ -28,6 +28,23 @@ describe("RacingCarGame Class 테스트", () => {
     expect(endGameSpy).toHaveBeenCalled();
   });
 
+  test("onGameStart의 return에따라 cars 객체가 알맞게 수정된다.", async () => {
+    const racingCarGame = new RacingCarGame({});
+
+    const expectedCars = new Map([
+      ["pobi", { distance: 0 }],
+      ["conan", { distance: 0 }],
+    ]);
+
+    jest
+      .spyOn(racingCarGame, "onGameStart")
+      .mockResolvedValueOnce(["pobi", "conan"]);
+
+    await racingCarGame.startGame();
+
+    expect(racingCarGame.cars).toEqual(expectedCars);
+  });
+
   test("executeOneRound가 지정한 횟수만큼 호출된다.", async () => {
     const testRoundNumber = 3;
 
